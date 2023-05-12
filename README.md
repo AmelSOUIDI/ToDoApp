@@ -10,7 +10,7 @@ Vous trouverez sur ce document des informations sur le projet web effectué dans
 
 Ce projet a été réalisé par le groupe d'étudiant de la formation INFOA2 en apprentissage suivant :
 * Missipssa __SLIMANI__
-* Souidi __AMEL__
+* Amel __Souidi__
 
 
 # Projet : a ToDo list application
