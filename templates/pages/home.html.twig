@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}ToDo - Accueil
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<div class="jumbotron">
+			<h1 class="display-4">Bienvenue sur ToDo</h1>
+			<p class="lead">Ne laissez plus le chaos prendre le dessus sur votre vie ! Prenez le contrôle de votre temps et accomplissez toutes vos tâches avec notre To do list intelligente et facile à utiliser.</p>
+			<hr class="my-4">
+			<p>Pour commencer, rendez-vous sur la page d'inscription pour utiliser l'application.</p>
+			<a class="btn btn-primary btn-lgz" href="{{ path('security.registration') }}" role="button">Inscription</a>
+		</div>
+	</div>
+{% endblock %}
