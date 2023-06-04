@@ -2,17 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\TachesRepository;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TachesRepository::class)]
-class Taches
+#[ORM\Entity(repositoryClass: TaskRepository::class)]
+class Task
 {
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $id;
 
     /**
