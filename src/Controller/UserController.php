@@ -4,38 +4,38 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class UserController extends DefaultController
+class UserController extends AbstractController
 {
-    /**
-     * @var UserRepository
+     /**
+     * $manager construct
+     *
+     * @var EntityManagerInterface
      */
-    private $userRepository;
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
+    private $entityManager;
 
-    public function __construct(UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->userRepository = $userRepository;
-        $this->passwordEncoder = $passwordEncoder;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * @Route("/users/list", name="user_list")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function listAction()
+    public function listAction(UserRepository $UserRepository)
     {
-        return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('App:User')->findAll()]);
+        return $this->render('user/list.html.twig', [ 'users' => $UserRepository->findAll()]);
     }
 
     /**
@@ -43,25 +43,59 @@ class UserController extends DefaultController
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request,UserPasswordHasherInterface $encoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setRoles($form->get('roles')->getData());
-            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
-            return $this->redirectToRoute('homepage');
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $hashedPassword = $encoder->hashPassword(
+                $user,
+                $user->getPassword()
+            );
+            $user->setPassword($hashedPassword);
+            $user->setCreatedAt(new \DateTimeImmutable());
+    
+            $user->setPassword($hashedPassword);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        
+            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+            return $this->redirectToRoute('login');
+            //return $this->redirectToRoute('user_list');
         }
 
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/register", name="register")
+     */
+    public function userRegister(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+      //  $this->denyAccessUnlessGranted('ROLE_ADMIN');
+     //   exit;
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+       
+            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+            return $this->redirectToRoute('login');
+        }
+
+        return $this->render('user/register.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -72,28 +106,28 @@ class UserController extends DefaultController
      * @return Response
      * @IsGranted("ROLE_USER")
      */
-    public function editAction(int $id, string $role_edit, Request $request) : Response
+    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $encoder)
     {
-        $user = $this->userRepository->find($id);
+       // $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
-
-            $this->getDoctrine()->getManager()->flush();
-
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
-            if ($role_edit === 'admin'){
-                return $this->redirectToRoute('user_list');
-            }
-
-            return $this->redirectToRoute('homepage');
-
+            return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+        return $this->render('user/edit.html.twig', [
+            'form' => $form->createView(), 
+            'user' => $user
+        ]);
     }
+    
 }
