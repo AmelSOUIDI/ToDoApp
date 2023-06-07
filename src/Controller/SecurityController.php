@@ -8,11 +8,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends DefaultController
 {
-    /**
-     * @Route("/login", name="login")
-     * @param AuthenticationUtils $authenticationUtils
-     * @return Response
-     */
+    #[Route('/login', name: 'login')]
     public function login(AuthenticationUtils $authenticationUtils) : Response
     {
         $error = $authenticationUtils->getLastAuthenticationError();
