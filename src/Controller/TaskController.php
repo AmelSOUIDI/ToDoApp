@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TaskRepository;
 
 class TaskController extends DefaultController
 
@@ -33,7 +35,7 @@ class TaskController extends DefaultController
      * @return RedirectResponse|Response
      * @IsGranted("ROLE_USER")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request,EntityManagerInterface $entityManager)
     {
         
         $task = new Task();
@@ -43,9 +45,10 @@ class TaskController extends DefaultController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $task->setUser($this->getUser());
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($task);
-            $em->flush();
+            $task->setIsDone(0);
+            $task->setCreatedAt(new \DateTimeImmutable());
+            $entityManager->persist($task);
+            $entityManager->flush();
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 

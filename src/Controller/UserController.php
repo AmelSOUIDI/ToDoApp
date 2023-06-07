@@ -71,32 +71,6 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/register", name="register")
-     */
-    public function userRegister(Request $request, UserPasswordEncoderInterface $encoder)
-    {
-      //  $this->denyAccessUnlessGranted('ROLE_ADMIN');
-     //   exit;
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $hash = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($hash);
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
-       
-            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
-            return $this->redirectToRoute('login');
-        }
-
-        return $this->render('user/register.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
 
     /**
      * @Route("/users/edit/{id}/{role_edit}", name="user_edit")
