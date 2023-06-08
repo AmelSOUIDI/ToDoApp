@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UserRepository;
 use App\Repository\TaskRepository;
 
 class TaskController extends DefaultController
@@ -66,14 +68,16 @@ class TaskController extends DefaultController
      * @return RedirectResponse|Response
      * @IsGranted("ROLE_USER")
      */
-    public function editAction(Task $task, Request $request)
+    public function editAction(Task $task, Request $request,EntityManagerInterface $entityManager)
     {
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            #$this->getDoctrine()->getManager()->flush();
+            $entityManager->persist($this);
+            $entityManager->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
@@ -90,10 +94,13 @@ class TaskController extends DefaultController
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      * @IsGranted("ROLE_USER")
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTaskAction(Task $task,EntityManagerInterface $entityManager)
     {
-        $task->toggle(!$task->isDone());
-        $this->getDoctrine()->getManager()->flush();
+        $task->toggle(!$task->IsisDone());
+        #$this->getDoctrine()->getManager()->flush();
+        $entityManager->persist($task);
+        $entityManager->flush();
+
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
         return $this->redirectToRoute('task_list');
@@ -103,14 +110,16 @@ class TaskController extends DefaultController
      * @Route("/tasks/{id}/delete", name="task_delete")
      * @IsGranted("ROLE_USER")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task,EntityManagerInterface $entityManager)
     {
         if ($task->getUser()->getUsername() === 'anonyme' && $this->getUser()){
             $roles = $this->getUser()->getRoles();
             if (in_array("ROLE_ADMIN",  $roles)){
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($task);
-                $em->flush();
+                $entityManager->persist($task);
+                
+                $entityManager->remove($task);
+              
+                $entityManager->flush();
                 $this->addFlash('success', 'La tâche a bien été supprimée.');
 
                 return $this->redirectToRoute('task_list');
@@ -122,9 +131,12 @@ class TaskController extends DefaultController
         }
 
         if ($task->getUser() === $this->getUser()){
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($task);
-            $em->flush();
+
+            $em=$entityManager->persist($task);
+                
+            $entityManager->remove($task);
+
+            $entityManager->flush();
             $this->addFlash('success', 'La tâche a bien été supprimée.');
 
             return $this->redirectToRoute('task_list');
@@ -154,39 +166,42 @@ class TaskController extends DefaultController
      * @return Response
      * @IsGranted("ROLE_USER")
      */
-    public function chooseViewerAction(Task $task)
+    public function chooseViewerAction(Task $task,UserRepository $UserRepository)
     {
-        $users = $this->getDoctrine()->getRepository('App:User')->getUsersByRoleViewer();
-    
+        $users = $UserRepository->getUsersByRoleViewer();
+
         // Code pour afficher la page de choix du destinataire
         return $this->render('task/choose_viewer.html.twig', ['task' => $task, 'users' => $users]);
     }
     
     
-    /**
+
+        /**
      * @Route("/tasks/{id}/share", name="task_share", methods={"POST"})
      * @param Task $task
      * @param Request $request
      * @return RedirectResponse
      * @IsGranted("ROLE_USER")
      */
-    public function shareTaskAction(Task $task, Request $request)
+
+
+    public function shareTaskAction(Task $task, Request $request, EntityManagerInterface $entityManager)
     {
         $viewerId = $request->request->get('viewer');
-        $user = $this->getDoctrine()->getRepository('App:User')->find($viewerId);
-        $task->addParatgerAvec($user);
-        $this->getDoctrine()->getManager()->flush();
-
-        // Récupérer l'utilisateur destinataire en fonction de l'ID sélectionné
-
-        // Code pour effectuer le partage de la tâche avec le destinataire
-
-        $this->addFlash('success', 'La tâche a été partagée avec succès.');
+        $userRepository = $entityManager->getRepository(User::class);
+        $user = $userRepository->find($viewerId);
+        
+        if ($user) {
+            $task->addPartagerAvec($user);
+            $entityManager->flush();
+        
+            $this->addFlash('success', 'La tâche a été partagée avec succès.');
+        } else {
+            $this->addFlash('error', 'Impossible de trouver l\'utilisateur sélectionné.');
+        }
 
         return $this->redirectToRoute('task_list');
     }
-
-
 
 
 

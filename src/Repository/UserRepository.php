@@ -56,6 +56,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
+        /**
+     * Récupère les utilisateurs ayant le rôle "ROLE_VIEWER".
+     *
+     * @return User[]
+     */
+    public function getUsersByRoleViewer()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.roles LIKE :role')
+            ->setParameter('role', '%ROLE_VIEWER%')
+            ->getQuery()
+            ->getResult();
+    }
+
+ 
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

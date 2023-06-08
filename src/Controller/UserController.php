@@ -80,7 +80,7 @@ class UserController extends AbstractController
      * @return Response
      * @IsGranted("ROLE_USER")
      */
-    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $encoder)
+    public function editAction(User $user, Request $request, UserPasswordHasherInterface $encoder)
     {
        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(UserType::class, $user);
@@ -88,7 +88,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $hash = $encoder->hashPassword($user, $user->getPassword());
             $user->setPassword($hash);
             $this->entityManager->persist($user);
             $this->entityManager->flush();
