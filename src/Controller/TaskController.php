@@ -75,8 +75,8 @@ class TaskController extends DefaultController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            #$this->getDoctrine()->getManager()->flush();
-            $entityManager->persist($this);
+
+            $entityManager->persist($task);
             $entityManager->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');

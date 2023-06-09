@@ -2,13 +2,12 @@
 
 {% block header_title %}
 <div style="text-align:center;margin:15%;">
-<h1 >   Organisez enfin
-votre travail et votre vie. <h1>
+<h1 >   Organisez enfin votre travail et votre vie. <h1>
 Gagnez en concentration, organisation et sérénité avec Todo App. La 1ère application de gestion de tâches et de to do list.</div>
 {% endblock %}
 
 {% block body %}
-
+    
     <div class="row" style="text-align:center;">
         {% if app.user %}
                     {% if not is_granted('ROLE_VIEWER') %}
