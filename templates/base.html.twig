@@ -41,10 +41,11 @@
                 </div>
 
             
-             <div class="float-right" style="text-align: right;margin-top:5px ;">
+             <div class="float-right" style="text-align: left;margin-top:5px ;">
                     {% if ((is_granted("ROLE_ADMIN"))) %}
                 <a href="{{ path('user_create') }}" class="btn btn-primary" style="background-color:#808080 ;border-radius: 10px; border-color:#808080 ;">Créer un utilisateur</a>
                 <a href="{{ path('user_list') }}" class="btn btn-primary" style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;">Liste utilisateurs</a>
+                <a href="{{ path('user_edit', {'id' : app.user.id, 'role_edit' : 'user_admin'}) }}" class="btn btn-primary" style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;">Modifier mon profil</a>
                 {% endif %}
                 {% if app.user %}
                 <a href="{{ path('app_logout') }}"style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;" class="pull-right btn btn-danger">Se déconnecter</a>
