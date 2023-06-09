@@ -9,15 +9,22 @@
     {% endif %}
 
     <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
-
+    <div class="row">
+        <div class="col-md-3">
+            <label for="username">Email:</label>
+            <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}">
+        </div>
+        <div class="col-md-3">
+            <label for="password">Mot de passe:</label>
+            <input type="password" class="form-control" id="password" name="_password">
+         </div>
         {# If you want to control the URL the user is redirected to on success
         <input type="hidden" name="_target_path" value="/account"> #}
+        <div class="col-md-3">
+        <button class="btn btn-success" type="submit" style="margin-top: 24px">Se connecter</button>
+        </div>
+    </div>
 
-        <button type="submit">login</button>
     </form>
 {% endblock %}
