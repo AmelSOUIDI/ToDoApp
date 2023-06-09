@@ -26,14 +26,14 @@
         
 
                             <form action="{{ path('task_delete', {'id' : task.id }) }}">
-                                <button class="btn btn-danger btn-sm pull-left">Supprimer</button>
+                                <button class="margin-right: 30px;btn btn-danger btn-sm pull-left">Supprimer</button>
                             </form>
 
                             <form action="{{ path('task_partager_single', {'id' : task.id }) }}">
-                                <button class="btn btn-primary btn-sm pull-left">Partager</button>
+                                <button class="margin-right: 30px;btn btn-primary btn-sm pull-left">Partager</button>
                             </form>
                                                 <form action="{{ path('task_toggle', {'id' : task.id }) }}">
-                                <button class="btn btn-success btn-sm pull-left">
+                                <button class="margin-right: 10px;btn btn-success btn-sm pull-left">
                                     {% if not task.IsisDone %}Marquer comme faite {% else %}Marquer non terminée{% endif %}
                                 </button>
                             </form>
