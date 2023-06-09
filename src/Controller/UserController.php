@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\ViewerType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
@@ -12,7 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserController extends AbstractController
@@ -71,6 +72,39 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
+        /**
+     * @Route("/users/viewer/{id}/create", name="viewer_create")
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function createAction2(Task $task,Request $request,UserPasswordHasherInterface $encoder)
+    {
+        $user = new User();
+        $form = $this->createForm(ViewerType::class, $user);
+
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) { 
+            $hashedPassword = $encoder->hashPassword(
+                $user,
+                $user->getPassword()
+            );
+            $user->setPassword($hashedPassword);
+            $user->setCreatedAt(new \DateTimeImmutable());
+    
+            $user->setPassword($hashedPassword);
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        
+            $this->addFlash('success', "Le Viewer a bien été ajouté.");
+            return $this->redirectToRoute('task_choose_viewer', ['id' => $task->getId()]);
+
+        }
+
+        return $this->render('viewer/create.html.twig', ['form' => $form->createView(),'task' => $task]);
+    }
+
 
     /**
      * @Route("/users/edit/{id}/{role_edit}", name="user_edit")
@@ -103,5 +137,7 @@ class UserController extends AbstractController
             'user' => $user
         ]);
     }
+
+    
     
 }
