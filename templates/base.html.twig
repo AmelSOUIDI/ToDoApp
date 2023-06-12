@@ -1,0 +1,638 @@
+amel souidi
+amel souidi#4314
+
+
+
+
+
+
+Message privé
+
+ 
+SLIMANI missipssa [INFOA2]
+ALIAS
+SLIMANI missipssa [INFOA2]
+
+
+
+
+
+Rechercher
+
+
+
+
+Discussion de
+
+ 
+SLIMANI missipssa [INFOA2]
+SLIMANI missipssa [INFOA2]#5122
+
+Ceci est le début de l'historique de tes messages privés avec SLIMANI missipssa [INFOA2].
+
+
+4 serveurs en commun
+
+Ajouter
+
+Bloquer
+
+Signaler un spam
+3 février 2021
+ 
+amel souidi — 03/02/2021 12:04
+Bonjour missi
+[12:04]
+Stp tu peux me mettre en contact avec  nadi tomeh ou un des profs sda
+[12:05]
+Psk enft ils ont pas noté le devoir et le projet pour moi
+[12:05]
+Ils ont compté que le partiel
+ 
+SLIMANI missipssa [INFOA2] — 03/02/2021 13:43
+T’as rendu le projet ?
+[13:43]
+Fin t’as fait avec qui?
+ 
+amel souidi — 03/02/2021 13:53
+Le devoir 1 je l’ai rendu mais on me l’a pas noté sachant que je suis du groupe 2
+[13:53]
+Et le projet g rendu avec SUREAU FABIO et 2 autres
+[13:53]
+Mais il a noté que fabio
+[13:53]
+Les autres membres non
+ 
+SLIMANI missipssa [INFOA2] — 03/02/2021 13:54
+Envoie un message au prof alors
+[13:54]
+Sur mattermost
+ 
+amel souidi — 03/02/2021 13:54
+G envoyé
+[13:54]
+Il répond pas
+[13:54]
+J’ai relancé plusieurs fois
+ 
+SLIMANI missipssa [INFOA2] — 03/02/2021 13:54
+Il est occuper
+ 
+amel souidi — 03/02/2021 13:54
+Mais tjr pas
+ 
+SLIMANI missipssa [INFOA2] — 03/02/2021 13:54
+Il revient se soir
+ 
+amel souidi — 03/02/2021 13:54
+On verra
+ 
+SLIMANI missipssa [INFOA2] — 03/02/2021 13:54
+Yes
+ 
+amel souidi — 03/02/2021 13:54
+Mercii missi
+ 
+SLIMANI missipssa [INFOA2] — 03/02/2021 14:00
+Derien 3omri
+ 
+amel souidi — 03/02/2021 14:41
+Les délégués  de nos jours 🤣
+ 
+SLIMANI missipssa [INFOA2] — 03/02/2021 14:52
+Mdrr euh
+[14:52]
+Sa veut dire quoi ça ?
+ 
+amel souidi — 03/02/2021 15:20
+Mddr rien jrigole avec toii
+15 juin 2022
+amel souidi
+ a commencé un appel qui a duré 5 minutes.
+ — 15/06/2022 20:03
+27 mai 2023
+SLIMANI missipssa [INFOA2]
+ a commencé un appel qui a duré 30 minutes.
+ — 27/05/2023 22:51
+ 
+SLIMANI missipssa [INFOA2] — 27/05/2023 22:58
+golaff
+3 juin 2023
+ 
+amel souidi — 03/06/2023 23:37
+Type de fichier joint : archive
+todoList-main.zip
+16.17 MB
+
+
+
+
+
+11 juin 2023
+ 
+SLIMANI missipssa [INFOA2] — Hier à 16:55
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>To Do List app</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <nav class="navbar navbar-light navbar-fixed-top"  role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+
+
+                    <img src="{{ asset('img/logo.png') }}" width="45px" height="40px"alt="logo" />
+
+                   <a class="navbar-brand" href="/" style="color:#800080; font-weight: bold;">To Do List app</a>
+
+
+                    
+                   
+                </div>
+
+            
+             <div class="float-right" style="text-align: right;margin-top:5px ;">
+                    {% if ((is_granted("ROLE_ADMIN"))) %}
+                <a href="{{ path('user_create') }}" class="pull-left btn btn-primary" style="margin-right: 10px;background-color:#808080 ;border-radius: 10px; border-color:#808080 ;">Créer un utilisateur</a>
+                <a href="{{ path('user_list') }}" class="pull-left btn btn-primary" style="margin-right: 10px;background-color:#800080 ;border-radius: 10px; border-color:#800080 ;">Liste utilisateurs</a>
+                <a href="{{ path('user_edit', {'id' : app.user.id, 'role_edit' : 'user_admin'}) }}" class="pull-left btn btn-primary" style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;">Modifier mon profil</a>
+                {% endif %}
+                {% if app.user %}
+                <a href="{{ path('app_logout') }}"style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;" class="pull-right btn btn-danger">Se déconnecter</a>
+                {% endif %}
+
+                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
+                <a href="{{ path('login') }}" style="background-color:#808080 ;border-radius: 10px; border-color:#808080 ;"class="btn btn-success " >Se connecter</a>
+                <a href="{{ path('user_create') }}" style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;" class="btn btn-warning ">S'inscrire</a>
+                {% endif %}
+            </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+            <div class="row">
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% for flash_message in app.session.flashBag.get('success') %}
+                        <div class="alert alert-success" role="alert">
+                            <strong>Superbe !</strong> {{ flash_message }}
+                        </div>
+                    {% endfor %}
+
+                    {% for flash_message in app.session.flashBag.get('error') %}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Oops !</strong> {{ flash_message }}
+                        </div>
+                    {% endfor %}
+
+                    {% block header_title %}{% endblock %}
+                    {% block header_img %}<img class="slide-image" width="300px" height="400px" src="{{ asset('img/todolist_homepage_.jpg') }}" alt="todo list">{% endblock %}
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+<style> 
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+
+body {
+    font-family: 'Rubik', sans-serif;
+... (106 lignes restantes)
+Réduire
+
+base.html.twig
+8 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+<div style="text-align:center;margin:15%;">
+<h1 >   Organisez enfin votre travail et votre vie. <h1>
+Gagnez en concentration, organisation et sérénité avec Todo App. La 1ère application de gestion de tâches et de to do list.</div>
+Afficher plus
+
+index.html.twig
+1 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block header_title %}<h1>CrÃ©er un Viewer</h1>{% endblock %}
+{% block header_img %}{% endblock %}
+
+{% block body %}
+Afficher plus
+
+create.html.twig
+1 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block header_title %}<h1>CrÃ©er un utilisateur</h1>{% endblock %}
+{% block header_img %}{% endblock %}
+
+{% block body %}
+Afficher plus
+
+create.html.twig
+1 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block header_img %}{% endblock %}
+
+{% block header_title %}<h1>Liste des utilisateurs</h1>{% endblock %}
+Afficher plus
+
+list.html.twig
+2 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block header_title %}<h1>Modifier <strong>{{ user.username }}</strong></h1>{% endblock %}
+{% block header_img %}{% endblock %}
+
+{% block body %}
+Afficher plus
+
+edit.html.twig
+1 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LoginController!{% endblock %}
+
+
+{% block body %}
+Afficher plus
+
+index.html.twig
+2 Ko
+
+
+
+
+
+[16:55]
+task
+{% extends 'base.html.twig' %}
+
+{% block header_img %}
+  <div style="display: flex; align-items: center;">
+    <img class="slide-image" src="{{ asset('img/logo.png') }}" alt="ToDo APP:" style="width: 40px; height: 35px;">
+    <span style="font-weight: bold; font-size: 24px;">Vos taches:</span>
+Afficher plus
+
+list.html.twig
+3 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Choisir le destinataire pour la tâche "{{ task.title }}"</h1>
+
+    <form method="post" action="{{ path('task_share', {'id': task.id}) }}">
+Afficher plus
+
+choose_viewer.html.twig
+1 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        {{ form_start(form, {'action' : path('task_create')}) }}
+            {{ form_widget(form) }}
+Afficher plus
+
+create.html.twig
+1 Ko
+
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
+            {{ form_widget(form) }}
+Afficher plus
+
+edit.html.twig
+1 Ko
+
+
+
+
+
+amel souidi
+ a commencé un appel qui a duré 28 minutes.
+ — Hier à 20:16
+
+
+
+ 
+amel souidi — Hier à 20:16
+tu mentends?
+
+
+
+
+ 
+SLIMANI missipssa [INFOA2] — Hier à 20:38
+ca a couper
+
+
+
+[20:39]
+tu mentends?
+ 
+amel souidi — Hier à 20:39
+non
+[20:39]
+et toi
+ 
+SLIMANI missipssa [INFOA2] — Hier à 20:39
+non
+[20:39]
+rappel
+[20:42]
+??
+[20:42]
+j'entends rien
+
+
+Envoyer un message à @SLIMANI missipssa [INFOA2]
+﻿
+
+
+
+
+
+
+
+ pour sélectionner
+
+
+ 
+SLIMANI missipssa [INFOA2]
+SLIMANI missipssa [INFOA2]#5122
+MEMBRE DISCORD DEPUIS
+
+mars 28, 2020
+NOTE
+
+
+
+4 serveurs en commun
+
+
+3 amis en commun
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>To Do List app</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <nav class="navbar navbar-light navbar-fixed-top"  role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+
+
+                    <img src="{{ asset('img/logo.png') }}" width="45px" height="40px"alt="logo" />
+
+                   <a class="navbar-brand" href="/" style="color:#800080; font-weight: bold;">To Do List app</a>
+
+
+                    
+                   
+                </div>
+
+            
+             <div class="float-right" style="text-align: right;margin-top:5px ;">
+                    {% if ((is_granted("ROLE_ADMIN"))) %}
+                <a href="{{ path('user_create') }}" class="pull-left btn btn-primary" style="margin-right: 10px;background-color:#808080 ;border-radius: 10px; border-color:#808080 ;">Créer un utilisateur</a>
+                <a href="{{ path('user_list') }}" class="pull-left btn btn-primary" style="margin-right: 10px;background-color:#800080 ;border-radius: 10px; border-color:#800080 ;">Liste utilisateurs</a>
+                <a href="{{ path('user_edit', {'id' : app.user.id, 'role_edit' : 'user_admin'}) }}" class="pull-left btn btn-primary" style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;">Modifier mon profil</a>
+                {% endif %}
+                {% if app.user %}
+                <a href="{{ path('app_logout') }}"style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;" class="pull-right btn btn-danger">Se déconnecter</a>
+                {% endif %}
+
+                {% if not app.user and 'login' != app.request.attributes.get('_route') %}
+                <a href="{{ path('login') }}" style="background-color:#808080 ;border-radius: 10px; border-color:#808080 ;"class="btn btn-success " >Se connecter</a>
+                <a href="{{ path('user_create') }}" style="background-color:#800080 ;border-radius: 10px; border-color:#800080 ;" class="btn btn-warning ">S'inscrire</a>
+                {% endif %}
+            </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container">
+            <div class="row">
+                
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% for flash_message in app.session.flashBag.get('success') %}
+                        <div class="alert alert-success" role="alert">
+                            <strong>Superbe !</strong> {{ flash_message }}
+                        </div>
+                    {% endfor %}
+
+                    {% for flash_message in app.session.flashBag.get('error') %}
+                        <div class="alert alert-danger" role="alert">
+                            <strong>Oops !</strong> {{ flash_message }}
+                        </div>
+                    {% endfor %}
+
+                    {% block header_title %}{% endblock %}
+                    {% block header_img %}<img class="slide-image" width="300px" height="400px" src="{{ asset('img/todolist_homepage_.jpg') }}" alt="todo list">{% endblock %}
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-md-12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+<style> 
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+
+body {
+    font-family: 'Rubik', sans-serif;
+    height: 100% !important;
+    background-color: white !important;
+}
+
+.container-fluid{
+    margin-top: 101px;
+    color:#000 !important;
+}
+
+.card{
+    background-color: #F8F9FB !important;
+}
+
+p{
+    font-size: calc(12px + (14 - 12) * ((100vw - 360px) / (1600 - 360))) !important; 
+    display: fkex;
+}
+
+h3{
+    font-size: calc(24px + (30 - 24) * ((100vw - 360px) / (1600 - 360))) !important; 
+}
+
+.social{
+    font-size: 21px !important; 
+}
+
+
+.color-text{
+    color:#757575 !important;
+}
+
+
+button {
+    font-size: calc(12px + (13 - 12) * ((100vw - 360px) / (1600 - 320))) !important;
+    background-color: #2CA6FB !important;
+    padding-left:  calc(20px + (28 - 20) * ((100vw - 360px) / (1600 - 360))) !important; 
+    padding-right: calc(20px + (28 - 20) * ((100vw - 360px) / (1600 - 360))) !important; 
+    padding-top:  calc(10px + (12 - 10) * ((100vw - 360px) / (1600 - 360))) !important; 
+    padding-bottom:   calc(10px + (12 - 10) * ((100vw - 360px) / (1600 - 360))) !important; 
+ }
+
+ button:focus {
+     -moz-box-shadow: none !important;
+     -webkit-box-shadow: none !important;
+     box-shadow: none !important;
+     outline-width: 0
+ }
+
+ footer{
+    color:#caced1 !important;
+ }
+
+ li{
+     margin-top: 20px ;
+     margin-bottom: 20px ;
+ }
+ 
+.Careers{ 
+    cursor: pointer;
+    color: #1E88E5;
+}
+
+.row-1{
+    background-color:#800080 !important;
+}
+
+.row-2{
+    
+    background-color: #800080 !important;
+}</style>
+       <div style="background-color:#800080 !important;" class="container-fluid pb-0 mb-0 justify-content-center text-light ">
+   
+    <footer style="background-color:#800080 !important;">
+       <div class="row justify-content-center mb-0 pt-5 pb-0 row-2 px-3">
+           <div class="col-12">
+                <div class="row row-2">
+                    <div class="col-sm-3 text-md-center">
+                        
+
+                    <a class="navbar-brand" href="/" style="color:#fffeff;">To Do List app</a>
+
+                  
+
+                    </div>
+
+                    <div class="col-sm-3  my-sm-0 mt-5"><ul class="list-unstyled"><li class="mt-0">Plateforme</li><li>Centre d'aide</li><li>Sécurité</li></ul></div>
+                    <div class="col-sm-3  my-sm-0 mt-5"><ul class="list-unstyled"><li class="mt-0">Clients</li><li>Cas d'utilisation</li><li>Service Clients</li></ul></div>
+                    <div class="col-sm-3  my-sm-0 mt-5"><ul class="list-unstyled"><li class="mt-0">Entreprise</li><li>À propos</li><li>Carrières</li></ul></div>
+                </div>  
+           </div>
+       </div>
+       <div class="row justify-content-center mt-0 pt-0 row-1 mb-0  px-sm-3 px-2">
+            <div class="col-12">
+                <div class="row my-4 row-1 no-gutters">
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+   <!--     <script src="{{ asset('js/jquery.js') }}"></script> -->
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    </body>
+</html>
+
+
