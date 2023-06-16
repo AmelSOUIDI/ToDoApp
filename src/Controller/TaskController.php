@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Repository\TaskRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class TaskController extends DefaultController
 
@@ -203,6 +205,31 @@ class TaskController extends DefaultController
         return $this->redirectToRoute('task_list');
     }
 
-
+    
+    /**
+     * @Route("/tasks/json", name="task_list_json", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function indexJson(TaskRepository $taskRepository): JsonResponse
+    {
+        $tasks = $taskRepository->findAll();
+        $responseData = [];
+    
+        foreach ($tasks as $task) {
+            $responseData[] = [
+                'id' => $task->getId(),
+                'owner' => $task->getUser()->getUsername(),
+                'title' => $task->getTitle(),
+                'completed' => $task->isIsDone(),
+                'content' => $task->getContent(),
+            ];
+        }
+    
+        $jsonResponse = new JsonResponse($responseData);
+        $jsonResponse->setEncodingOptions(JSON_PRETTY_PRINT);
+    
+        return $jsonResponse;
+    }
+    
 
 }
