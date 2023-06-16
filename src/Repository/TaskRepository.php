@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Task;
+
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +39,27 @@ class TaskRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function countTasksByOwner(User $owner): int
+    {
+        return $this->createQueryBuilder('t')
+            ->select('COUNT(t)')
+            ->andWhere('t.user = :owner')
+            ->setParameter('owner', $owner)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getAverageCompletedTasksByOwner(User $owner): float
+    {
+        $completedTasksCount = $this->count(['user' => $owner, 'isDone' => true]);
+        $totalTasksCount = $this->count(['user' => $owner]);
+
+        if ($totalTasksCount > 0) {
+            return $completedTasksCount / $totalTasksCount;
+        }
+
+        return 0;
     }
 
 //    /**

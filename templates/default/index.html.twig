@@ -2,11 +2,10 @@
 
 {% block header_title %}
 <div style="text-align:center;margin:15%;">
-<h1>Organisez enfin votre travail et votre vie.</h1>
-<p>Gagnez en concentration, organisation et sérénité avec Todo App. La 1ère application de gestion de tâches et de to-do list.</p>
+    <h1>Organisez enfin votre travail et votre vie.</h1>
+    <h1>Gagnez en concentration, organisation et sérénité avec Todo App. La 1ère application de gestion de tâches et de to-do list.</h1>
 </div>
 {% endblock %}
-
 {% block body %}
 
     <div class="row" style="text-align:center;">
@@ -17,6 +16,7 @@
         
             <a href="{{ path('task_list') }}" class="btn btn-info">Consulter la liste des tâches à faire</a>
             <a href="{{ path('task_list_json') }}" class="btn" style="background-color: #800080; color: white;">Consulter la liste des tâches en JSON</a>
+            <a href="{{ path('task_statistics') }}" class="btn btn-primary ">Consulter les statistiques</a>
         {% endif %}
     </div>
 {% endblock %}
