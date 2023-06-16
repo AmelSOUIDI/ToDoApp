@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UserRepository;
 use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Service\ListStatisticsService;
 
 
 class TaskController extends DefaultController
@@ -31,6 +32,22 @@ class TaskController extends DefaultController
             $tasks =$this->getUser()->getTasks();
         }
         return $this->render('task/list.html.twig', ['tasks' => $tasks]);
+    }
+
+    /**
+     * @Route("/task/statistics", name="task_statistics")
+     * @IsGranted("ROLE_USER")
+     */
+    public function statisticsAction(TaskRepository $taskRepository)
+    {
+        $owner = $this->getUser();
+        $taskCount = $taskRepository->countTasksByOwner($owner);
+        $averageCompletedTasks = $taskRepository->getAverageCompletedTasksByOwner($owner);
+
+        return $this->render('task/statistics.html.twig', [
+            'taskCount' => $taskCount,
+            'averageCompletedTasks' => $averageCompletedTasks,
+        ]);
     }
 
     /**

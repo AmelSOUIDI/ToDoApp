@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <style>
+    .chart-container {
+      display: flex;
+      justify-content: space-around;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    .chart {
+      width: 400px;
+      margin: 0 10px;
+    }
+  </style>
+  <br>
+  <h1>Statistiques des tâches</h1>
+  <div class="chart-container">
+    <div class="chart">
+      <canvas id="taskCountChart" width="400" height="400"></canvas>
+    </div>
+    <div class="chart">
+      <canvas id="completedTasksChart" width="400" height="400"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    var taskCount = {{ taskCount }};
+    var completedTasksPercentage = {{ averageCompletedTasks * 100 }};
+
+    var taskCountChartCtx = document.getElementById('taskCountChart').getContext('2d');
+    var taskCountChart = new Chart(taskCountChartCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Nombre total de tâches'],
+        datasets: [{
+          label: 'Nombre total de tâches',
+          data: [taskCount],
+          backgroundColor: 'blue',
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            ticks: {
+              stepSize: 1,
+              precision: 0
+            }
+          }
+        }
+      }
+    });
+
+    var completedTasksChartCtx = document.getElementById('completedTasksChart').getContext('2d');
+    var completedTasksChart = new Chart(completedTasksChartCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Tâches terminées', 'Tâches pas encore terminées'],
+        datasets: [{
+          label: 'Pourcentage des tâches terminées',
+          data: [completedTasksPercentage, 100 - completedTasksPercentage],
+          backgroundColor: ['green', 'gray'],
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+  </script>
+{% endblock %}
