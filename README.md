@@ -19,11 +19,11 @@ Notre projet se nomme __ToDoApp__, un site web permettant d’organiser des tach
 et remplir des listes puis les partager à des viewer. Les listes sont confidentielles et visibles que par leur
 propriétaire et les viewers invités à les consulter. L’owner valide ses taches terminées
 
-#Installation et utilisation:
-1- Téléchargez et dézipper l'archive
-2- Placez-vous dans votre répertoire et renseignez les commande suivantes:
--composer install
--php bin/console doctrine:database:create
--php bin/console make:migration
--symfony server:start -d
-et Voila !
+# Installation et utilisation:
+* __1- Téléchargez et dézipper l'archive__
+* __2- Placez-vous dans votre répertoire et renseignez les commande suivantes:__
+* -composer install
+* -php bin/console doctrine:database:create
+* -php bin/console make:migration
+* -symfony server:start -d
+* et Voila !
